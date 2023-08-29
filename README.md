@@ -9,19 +9,19 @@ Welcome to our internal Generative AI on AWS curriculum. This repository contain
 
 Currently the curriculum includes the following labs:
 ### IaaS
-- [Lab 01: LLMs on EC2 via the Transformers Library](https://gitlab.com/trek10inc/internal/machine-learning/generative-ai-curriculum/-/tree/main/IaaS/lab01-ec2-lllm-transformers-lib) (Approx. 30min)
+- [Lab 01: LLMs on EC2 via the Transformers Library](IaaS/lab01-bedrock-introduction/README.md) (Approx. 30min)
 
 <!-- Planned Labs:
 - Lab 02: Quantized Models on EC2
 - Lab 03: Pretraining LLMs on EC2 -->
 ### PaaS
-- [Lab 01: AWS SageMaker Finetuning](https://gitlab.com/trek10inc/internal/machine-learning/generative-ai-curriculum/-/tree/main/PaaS/lab01-sagemaker-finetuning-foundational-model)
+- [Lab 01: AWS SageMaker Finetuning](PaaS/lab01-sagemaker-finetuning-foundational-model)
 
 <!-- Planned Labs:
 - Lab 02: AWS SageMaker Instruction Based Finetuning -->
 ### SaaS
-- [Lab 01: Bedrock Introduction](https://gitlab.com/trek10inc/internal/machine-learning/generative-ai-curriculum/-/tree/main/SaaS/lab01-bedrock-introduction)
-- [Lab 02: Bedrock Chatbots](https://gitlab.com/trek10inc/internal/machine-learning/generative-ai-curriculum/-/tree/main/SaaS/lab02-bedrock-chatbots)
+- [Lab 01: Bedrock Introduction](SaaS/lab01-bedrock-introduction)
+- [Lab 02: Bedrock Chatbots](SaaS/lab02-bedrock-chatbots)
 
 
 <!-- Planned Labs:
