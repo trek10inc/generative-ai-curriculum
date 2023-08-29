@@ -91,7 +91,7 @@ To grant Bedrock access to your identity, you can:
 }
 ```
 
-⚠️ Note: With Amazon SageMaker, your notebook execution role will typically be separate from the user or role that you log in to the AWS Console with. If you'd like to explore the AWS Console for Amazon Bedrock, you'll need to grant permissions to your Console user/role too.
+> ⚠️ Note: With Amazon SageMaker, your notebook execution role will typically be separate from the user or role that you log in to the AWS Console with. If you'd like to explore the AWS Console for Amazon Bedrock, you'll need to grant permissions to your Console user/role too.
 
 For more information on the fine-grained action and resource permissions in Bedrock, check out the Bedrock Developer Guide.
 
@@ -107,7 +107,7 @@ Using one of the notebook environments listed in the [Choose a notebook environm
 
 If you completed [Lab 01 - Bedrock Introduction](../lab01-bedrock-introduction/README.md), you can skip this step.
 
-ℹ️ Note: In SageMaker Studio, you can open a "System Terminal" to run these commands by clicking File > New > Terminal
+> ℹ️ Note: In SageMaker Studio, you can open a "System Terminal" to run these commands by clicking File > New > Terminal
 
 Clone this repository to your notebook instance. This can be done by running the following command in a terminal:
 ```bash
