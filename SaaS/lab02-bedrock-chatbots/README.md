@@ -107,6 +107,8 @@ Using one of the notebook environments listed in the [Choose a notebook environm
 
 If you completed [Lab 01 - Bedrock Introduction](../lab01-bedrock-introduction/README.md), you can skip this step.
 
+ℹ️ Note: In SageMaker Studio, you can open a "System Terminal" to run these commands by clicking File > New > Terminal
+
 Clone this repository to your notebook instance. This can be done by running the following command in a terminal:
 ```bash
 git clone git@gitlab.com:trek10inc/internal/machine-learning/generative-ai-curriculum.git
