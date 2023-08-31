@@ -1,0 +1,124 @@
+Resources:
+  # create IAM role for EC2 instance
+  Ec2InstanceRole:
+   Type: AWS::IAM::Role
+   Properties:
+        AssumeRolePolicyDocument:
+          Version: 2012-10-17
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service: ec2.amazonaws.com
+              Action: sts:AssumeRole
+        Path: /llm-workshop/
+
+  # create policy for EC2 instance IAM Role
+  Ec2InstanceRolePolicy:
+    Type: AWS::IAM::Policy
+    Properties:
+      Roles:
+        - !Ref Ec2InstanceRole
+      PolicyName: Ec2InstanceRolePolicy
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Action:
+              - s3:GetObject
+              - s3:ListBucket
+            Resource:
+              - "arn:aws:s3:::nvidia-gaming/*"
+              - "arn:aws:s3:::nvidia-gaming"
+
+  InstanceProfile:
+    Type: 'AWS::IAM::InstanceProfile'
+    Properties:
+      Roles:
+        - !Ref Ec2InstanceRole
+      Path: /llm-workshop/
+
+  LLLMEC2KeyPair:
+    Type: AWS::EC2::KeyPair
+    Properties:
+      KeyName: !Sub "LLLMEC2KeyPair-${AWS::StackName}-${AWS::Region}" #  ensures uniqueness across different stacks and regions
+  
+  InstanceSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Enable SSH access via port 22
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+      Tags:
+        - Key: Name
+          Value: InstanceSecurityGroup
+
+# define ec2 instance in cloudformation
+  Ec2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-05548f9cecf47b442
+      InstanceType: g5.2xlarge
+      SecurityGroupIds:
+        - !GetAtt InstanceSecurityGroup.GroupId
+      KeyName: !Ref LLLMEC2KeyPair
+      IamInstanceProfile: !Ref InstanceProfile
+      BlockDeviceMappings:
+        - DeviceName: "/dev/xvda"
+          Ebs:
+            VolumeSize: 100
+      Tags:
+        - Key: Name
+          Value: lllm
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash -xe
+          sudo yum update -y
+
+          # add requirements.txt and test.py files to instance
+          ENCODED_PYTHON_SCRIPT=ZnJvbSB0cmFuc2Zvcm1lcnMgaW1wb3J0IEF1dG9Ub2tlbml6ZXIsIEF1dG9Nb2RlbEZvckNhdXNhbExNCmltcG9ydCB0cmFuc2Zvcm1lcnMKaW1wb3J0IHRvcmNoCgptb2RlbCA9ICJ0aWl1YWUvZmFsY29uLTdiIgoKcHJvbXB0ID0gIldlbGNvbWUgdG8gb3VyIHdvcmtzaG9wIGZvY3VzaW5nIG9uIEdlbmVyYXRpdmUgQUkgb24gQVdTLiBHZW5lcmF0aXZlIEFJIGlzIgoKdG9rZW5pemVyID0gQXV0b1Rva2VuaXplci5mcm9tX3ByZXRyYWluZWQobW9kZWwpCnBpcGVsaW5lID0gdHJhbnNmb3JtZXJzLnBpcGVsaW5lKAogICAgInRleHQtZ2VuZXJhdGlvbiIsCiAgICBtb2RlbD1tb2RlbCwKICAgIHRva2VuaXplcj10b2tlbml6ZXIsCiAgICB0b3JjaF9kdHlwZT10b3JjaC5iZmxvYXQxNiwKICAgIHRydXN0X3JlbW90ZV9jb2RlPVRydWUsCiAgICBkZXZpY2VfbWFwPSJhdXRvIiwKKQpzZXF1ZW5jZXMgPSBwaXBlbGluZSgKICAgIHByb21wdCwKICAgIG1heF9sZW5ndGg9MjAwLAogICAgZG9fc2FtcGxlPVRydWUsCiAgICB0b3Bfaz0xMCwKICAgIG51bV9yZXR1cm5fc2VxdWVuY2VzPTEsCiAgICBlb3NfdG9rZW5faWQ9dG9rZW5pemVyLmVvc190b2tlbl9pZCwKKQpmb3Igc2VxIGluIHNlcXVlbmNlczoKICAgIHByaW50KGYiUmVzdWx0OiB7c2VxWydnZW5lcmF0ZWRfdGV4dCddfSIpCg==
+          ENCODED_REQUIREMENTS_FILE=YWNjZWxlcmF0ZT09MC4yMS4wCmF0dHJzPT0yMC4zLjAKYXdzLWNmbi1ib290c3RyYXA9PTIuMAphd3NjbGk9PTIuOS4xOQphd3NjcnQ9PTAuMTYuNwpCYWJlbD09Mi45LjEKY2ZmaT09MS4xNC41CmNoYXJkZXQ9PTQuMC4wCmNoZXZyb249PTAuMTMuMQpjbG91ZC1pbml0PT0yMi4yLjIKY21ha2U9PTMuMjcuMApjb2xvcmFtYT09MC40LjQKY29uZmlnb2JqPT01LjAuNgpjcnlwdG9ncmFwaHk9PTM2LjAuMQpkYnVzLXB5dGhvbj09MS4yLjE4CmRpc3Rybz09MS41LjAKZG9jdXRpbHM9PTAuMTYKZWMyLWhpYmluaXQtYWdlbnQ9PTEuMC4yCmVpbm9wcz09MC42LjEKZmlsZWxvY2s9PTMuMTIuMgpmc3NwZWM9PTIwMjMuNi4wCmdwZz09MS4xNS4xCmh1Z2dpbmdmYWNlLWh1Yj09MC4xNi40CmlkbmE9PTIuMTAKSmluamEyPT0yLjExLjMKam1lc3BhdGg9PTAuMTAuMApqc29ucGF0Y2g9PTEuMjEKanNvbnBvaW50ZXI9PTIuMApqc29uc2NoZW1hPT0zLjIuMApsaWJjb21wcz09MC4xLjE4CmxpdD09MTYuMC42CmxvY2tmaWxlPT0wLjEyLjIKTWFya3VwU2FmZT09MS4xLjEKbXBtYXRoPT0xLjMuMApuZXRpZmFjZXM9PTAuMTAuNgpuZXR3b3JreD09My4xCm51bXB5PT0xLjI1LjEKbnZpZGlhLWN1Ymxhcy1jdTExPT0xMS4xMC4zLjY2Cm52aWRpYS1jdWRhLWN1cHRpLWN1MTE9PTExLjcuMTAxCm52aWRpYS1jdWRhLW52cnRjLWN1MTE9PTExLjcuOTkKbnZpZGlhLWN1ZGEtcnVudGltZS1jdTExPT0xMS43Ljk5Cm52aWRpYS1jdWRubi1jdTExPT04LjUuMC45NgpudmlkaWEtY3VmZnQtY3UxMT09MTAuOS4wLjU4Cm52aWRpYS1jdXJhbmQtY3UxMT09MTAuMi4xMC45MQpudmlkaWEtY3Vzb2x2ZXItY3UxMT09MTEuNC4wLjEKbnZpZGlhLWN1c3BhcnNlLWN1MTE9PTExLjcuNC45MQpudmlkaWEtbmNjbC1jdTExPT0yLjE0LjMKbnZpZGlhLW52dHgtY3UxMT09MTEuNy45MQpvYXV0aGxpYj09My4wLjIKcGFja2FnaW5nPT0yMy4xCnBseT09My4xMQpwcmV0dHl0YWJsZT09MC43LjIKcHJvbXB0LXRvb2xraXQ9PTMuMC4yNApwc3V0aWw9PTUuOS41CnB5Y3BhcnNlcj09Mi4yMApweXBhcnNpbmc9PTIuNC43CnB5cnNpc3RlbnQ9PTAuMTcuMwpweXNlcmlhbD09My40ClB5U29ja3M9PTEuNy4xCnB5dGhvbi1kYWVtb249PTIuMy4wCnB5dGhvbi1kYXRldXRpbD09Mi44LjEKcHl0ej09MjAyMi43LjEKUHlZQU1MPT01LjQuMQpyZWdleD09MjAyMy42LjMKcmVsZWFzZS1ub3RpZmljYXRpb249PTEuMgpyZXF1ZXN0cz09Mi4yNS4xCnJwbT09NC4xNi4xLjMKcnVhbWVsLnlhbWw9PTAuMTYuNgpydWFtZWwueWFtbC5jbGliPT0wLjEuMgpzYWZldGVuc29ycz09MC4zLjEKc2VsaW51eD09My40CnNlcG9saWN5PT0zLjQKc2V0b29scz09NC40LjEKc2l4PT0xLjE1LjAKc3VwcG9ydC1pbmZvPT0xLjAKc3ltcHk9PTEuMTIKdG9rZW5pemVycz09MC4xMy4zCnRvcmNoPT0yLjAuMQp0cWRtPT00LjY1LjAKdHJhbnNmb3JtZXJzPT00LjMxLjAKdHJpdG9uPT0yLjAuMAp0eXBpbmdfZXh0ZW5zaW9ucz09NC43LjEKdXJsbGliMz09MS4yNS4xMAp3Y3dpZHRoPT0wLjIuNQ==
+          echo $ENCODED_PYTHON_SCRIPT | base64 --decode > /home/ec2-user/main.py
+          echo $ENCODED_REQUIREMENTS_FILE | base64 --decode > /home/ec2-user/requirements.txt
+
+          #set up python env
+          sudo yum install python3 python3-devel python3-pip -y
+
+          #install python libs
+          pip3 install -r /home/ec2-user/requirements.txt
+
+          #install nvidia drivers
+          sudo yum install -y gcc kernel-devel-$(uname -r)
+          aws s3 cp --recursive s3://nvidia-gaming/linux/latest/ .
+          unzip *Cloud_Gaming-Linux-Guest-Drivers.zip -d nvidia-drivers
+          chmod +x nvidia-drivers/NVIDIA-Linux-x86_64*-grid.run
+          sudo ./nvidia-drivers/NVIDIA-Linux-x86_64*.run -s
+          cat << EOF | sudo tee -a /etc/nvidia/gridd.conf
+          vGamingMarketplace=2
+          EOF
+          sudo curl -o /etc/nvidia/GridSwCert.txt "https://nvidia-gaming.s3.amazonaws.com/GridSwCert-Archive/GridSwCertLinux_2021_10_2.cert"
+          sudo touch /etc/modprobe.d/nvidia.conf
+          echo "options nvidia NVreg_EnableGpuFirmware=0" | sudo tee --append /etc/modprobe.d/nvidia.conf
+          sudo reboot
+
+          # use nvidia-smi to ensure proper driver installation
+          TEST_DRIVER=$(nvidia-smi)
+          if [[ $TEST_DRIVER == *"Driver Version"* ]]; then
+            echo "Driver installed successfully"
+          else
+            echo "Driver not installed successfully"
+          fi
+
+Outputs:
+  LLLMKeyPairId:
+    Description: ID of the newly created EC2 Key Pair
+    Value: !Ref LLLMEC2KeyPair
+    Export:
+      Name: LLLMEC2KeyPairID
+  EC2PublicDnsName:
+    Description: ID of the newly created EC2 Key Pair
+    Value: !GetAtt Ec2Instance.PublicDnsName
+    Export:
+      Name: EC2PublicDnsName
