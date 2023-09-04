@@ -101,11 +101,23 @@ It is recommended you watch [Andrej Karpathy's State of GPT Talk](https://www.yo
 
 ## Contributing
 
-We welcome contributions to this curriculum. Please create issues and pull requests as you see fit. Additionally, if you have any questions or concerns please feel free to reach out to the Trek10 team via [email](mailto:bjudson@trek10.com) or [slack](https://trek10-community.slack.com/archives/C02BZ8ZJY5S).
+We welcome contributions to this curriculum. Please create issues and pull requests as you see fit. Additionally, if you have any questions or concerns please feel free to reach out to the Trek10 team via [email](mailto:bjudson@trek10.com).
+
+ <!-- or [slack](https://trek10-community.slack.com/archives/C02BZ8ZJY5S). -->
 
 ## Additional Resources
 
+**Example Demos:**
+- AWS Bedrock Workshop: [Link here](https://github.com/aws-samples/amazon-bedrock-workshop)
+- AWS SageMaker Examples: [Link here](https://github.com/aws/amazon-sagemaker-examples)
+
+**Videos:**
+- **Andrej Karpathy's State of GPT Talk:** [Link here](https://www.youtube.com/watch?v=bZQun8Y4L2A)
+
+**Documentation:**
 - **AWS Official Documentation:** [Link here]
+
+**Trek10 Resources:**
 - **Trek10 Resources:** [Link here]
 <!-- 
 ## License
