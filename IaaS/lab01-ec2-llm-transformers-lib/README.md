@@ -290,45 +290,44 @@ ssh -i "ec2-lllm-transformers-lib.pem" ec2-ip-address.compute-1.amazonaws.com
 
 You should now be SSH'd into the EC2 instance!
 
-N.B. Even once the template has been successfully deployed and the EC2 instance is running, it may take a few minutes for the instance to complete its User Data script and to be fully configured and ready to run the model. Once the instance is running and you are SSH'd into the instance, you can use the following command to view the output of the user data and see if it has been completed:
-```
-cat /var/log/cloud-init-output.log
-```
-
-If the user data was completed, the bottom of the output should look something like this:
-```
-+ sudo reboot
-Cloud-init v. 22.2.2 running 'init' at Mon, 21 Aug 2023 14:59:32 +0000. Up 3.63 seconds.
-ci-info: +++++++++++++++++++++++++++++++++++++++Net device info+++++++++++++++++++++++++++++++++++++++
-ci-info: +--------+------+------------------------------+---------------+--------+-------------------+
-ci-info: | Device |  Up  |           Address            |      Mask     | Scope  |     Hw-Address    |
-ci-info: +--------+------+------------------------------+---------------+--------+-------------------+
-ci-info: |  ens5  | True |         172.31.68.76         | 255.255.240.0 | global | 16:d2:bf:c3:84:81 |
-ci-info: |  ens5  | True | fe80::14d2:bfff:fec3:8481/64 |       .       |  link  | 16:d2:bf:c3:84:81 |
-ci-info: |   lo   | True |          127.0.0.1           |   255.0.0.0   |  host  |         .         |
-ci-info: |   lo   | True |           ::1/128            |       .       |  host  |         .         |
-ci-info: +--------+------+------------------------------+---------------+--------+-------------------+
-ci-info: ++++++++++++++++++++++++++++++Route IPv4 info++++++++++++++++++++++++++++++
-ci-info: +-------+-------------+-------------+-----------------+-----------+-------+
-ci-info: | Route | Destination |   Gateway   |     Genmask     | Interface | Flags |
-ci-info: +-------+-------------+-------------+-----------------+-----------+-------+
-ci-info: |   0   |   0.0.0.0   | 172.31.64.1 |     0.0.0.0     |    ens5   |   UG  |
-ci-info: |   1   |  172.31.0.2 | 172.31.64.1 | 255.255.255.255 |    ens5   |  UGH  |
-ci-info: |   2   | 172.31.64.0 |   0.0.0.0   |  255.255.240.0  |    ens5   |   U   |
-ci-info: |   3   | 172.31.64.1 |   0.0.0.0   | 255.255.255.255 |    ens5   |   UH  |
-ci-info: +-------+-------------+-------------+-----------------+-----------+-------+
-ci-info: +++++++++++++++++++Route IPv6 info+++++++++++++++++++
-ci-info: +-------+-------------+---------+-----------+-------+
-ci-info: | Route | Destination | Gateway | Interface | Flags |
-ci-info: +-------+-------------+---------+-----------+-------+
-ci-info: |   1   |  fe80::/64  |    ::   |    ens5   |   U   |
-ci-info: |   3   |    local    |    ::   |    ens5   |   U   |
-ci-info: |   4   |  multicast  |    ::   |    ens5   |   U   |
-ci-info: +-------+-------------+---------+-----------+-------+
-Cloud-init v. 22.2.2 running 'modules:config' at Mon, 21 Aug 2023 14:59:33 +0000. Up 4.48 seconds.
-Cloud-init v. 22.2.2 running 'modules:final' at Mon, 21 Aug 2023 14:59:33 +0000. Up 4.82 seconds.
-Cloud-init v. 22.2.2 finished at Mon, 21 Aug 2023 14:59:34 +0000. Datasource DataSourceEc2.  Up 5.17 seconds
-```
+>N.B. Even once the template has been successfully deployed and the EC2 instance is running, it may take a few minutes for the instance to complete its User Data script and to be fully configured and ready to run the model. Once the instance is running and you are SSH'd into the instance, you can use the following command to view the output of the user data and see if it has been completed:
+>  ```
+>  cat /var/log/cloud-init-output.log
+>  ```
+>  If the user data was completed, the bottom of the output should look something like this:
+>  ```
+>  + sudo reboot
+>  Cloud-init v. 22.2.2 running 'init' at Mon, 21 Aug 2023 14:59:32 +0000. Up 3.63 seconds.
+>  ci-info: +++++++++++++++++++++++++++++++++++++++Net device info+++++++++++++++++++++++++++++++++++++++
+>  ci-info: +--------+------+------------------------------+---------------+--------+-------------------+
+>  ci-info: | Device |  Up  |           Address            |      Mask     | Scope  |     Hw-Address    |
+>  ci-info: +--------+------+------------------------------+---------------+--------+-------------------+
+>  ci-info: |  ens5  | True |         172.31.68.76         | 255.255.240.0 | global | 16:d2:bf:c3:84:81 |
+>  ci-info: |  ens5  | True | fe80::14d2:bfff:fec3:8481/64 |       .       |  link  | 16:d2:bf:c3:84:81 |
+>  ci-info: |   lo   | True |          127.0.0.1           |   255.0.0.0   |  host  |         .         |
+>  ci-info: |   lo   | True |           ::1/128            |       .       |  host  |         .         |
+>  ci-info: +--------+------+------------------------------+---------------+--------+-------------------+
+>  ci-info: ++++++++++++++++++++++++++++++Route IPv4 info++++++++++++++++++++++++++++++
+>  ci-info: +-------+-------------+-------------+-----------------+-----------+-------+
+>  ci-info: | Route | Destination |   Gateway   |     Genmask     | Interface | Flags |
+>  ci-info: +-------+-------------+-------------+-----------------+-----------+-------+
+>  ci-info: |   0   |   0.0.0.0   | 172.31.64.1 |     0.0.0.0     |    ens5   |   UG  |
+>  ci-info: |   1   |  172.31.0.2 | 172.31.64.1 | 255.255.255.255 |    ens5   |  UGH  |
+>  ci-info: |   2   | 172.31.64.0 |   0.0.0.0   |  255.255.240.0  |    ens5   |   U   |
+>  ci-info: |   3   | 172.31.64.1 |   0.0.0.0   | 255.255.255.255 |    ens5   |   UH  |
+>  ci-info: +-------+-------------+-------------+-----------------+-----------+-------+
+>  ci-info: +++++++++++++++++++Route IPv6 info+++++++++++++++++++
+>  ci-info: +-------+-------------+---------+-----------+-------+
+>  ci-info: | Route | Destination | Gateway | Interface | Flags |
+>  ci-info: +-------+-------------+---------+-----------+-------+
+>  ci-info: |   1   |  fe80::/64  |    ::   |    ens5   |   U   |
+>  ci-info: |   3   |    local    |    ::   |    ens5   |   U   |
+>  ci-info: |   4   |  multicast  |    ::   |    ens5   |   U   |
+>  ci-info: +-------+-------------+---------+-----------+-------+
+>  Cloud-init v. 22.2.2 running 'modules:config' at Mon, 21 Aug 2023 14:59:33 +0000. Up 4.48 seconds.
+>  Cloud-init v. 22.2.2 running 'modules:final' at Mon, 21 Aug 2023 14:59:33 +0000. Up 4.82 seconds.
+>  Cloud-init v. 22.2.2 finished at Mon, 21 Aug 2023 14:59:34 +0000. Datasource DataSourceEc2.  Up 5.17 seconds
+>  ```
 
 You can verify the NVIDIA drivers are successfully installed by running the following command:
 ```
