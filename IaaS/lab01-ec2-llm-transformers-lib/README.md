@@ -53,7 +53,7 @@ Once inside the instance, you will be able to run a Python script to download an
 
 #### Let's walk through how the configuration needs are addressed in more detail...
 
-##### The EC2 instance must be configured with the proper drivers to run AI workloads on the GPU.
+### The EC2 instance must be configured with the proper drivers to run AI workloads on the GPU.
 
 These GPU-compatible EC2 instances are created with a version of the Amazon Linux 2023 AMI. By default, these come installed with open-source Nouveau drivers. Instead, Large Language Models require the corresponding Nvidia drivers for your environment. The Nvidia drivers are not open-source and, therefore, cannot be installed by default. However, Nvidia has made the drivers available for download. Refer to the following [AWS documentation](
 https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/install-nvidia-driver.html) for more details on installing the drivers. The CloudFormation template will automatically download and install the Nvidia drivers on the EC2 instance via its User Data (which runs on boot). This can be found in lines 79-91 of the template.yaml file found in this repository:
@@ -81,7 +81,7 @@ https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/install-nvidia-driver.html) 
 
 N.B. you can use AWS's Deep Learning AMI instead of the Amazon Linux 2023 AMI. The Deep Learning AMI comes with the Nvidia drivers pre-installed. However, the Deep Learning AMI is not free and will incur additional costs. For more information on the Deep Learning AMI, please refer to the following [AWS documentation](https://docs.aws.amazon.com/dlami/latest/devguide/what-is-dlami.html).
 
-##### The EC2 instance must be configured with the proper Python packages to run the transformers library.
+### The EC2 instance must be configured with the proper Python packages to run the transformers library.
 
 The Transformers Python library and a set of required associated libraries need to be installed to run the Generative AI models on the instance. The set of required libraries can be found in the ec2-files/requirements.txt file. The CloudFormation template encodes that requirements.txt file, includes it in the user data, and then uses pip3 to install the libraries. This can be seen in lines 65-77 of the CloudFormation template:
 ```
@@ -105,7 +105,7 @@ The Transformers Python library and a set of required associated libraries need 
           pip3 install -r /home/ec2-user/requirements.txt
 ```
 
-##### The EC2 instance must be configured with proper permissions to access services such as the S3 bucket containing the Nvidia drivers.
+### The EC2 instance must be configured with proper permissions to access services such as the S3 bucket containing the Nvidia drivers.
 
 The EC2 instance must be configured with an IAM role that has the proper permissions to access the S3 bucket containing the Nvidia Drivers. The CloudFormation template will automatically create this IAM role. This can be found in lines 1-58 of the template.yaml file:
 ```
@@ -158,7 +158,7 @@ Resources:
       IamInstanceProfile: !Ref InstanceProfile
 ```
 
-##### The EC2 instance must be configured with the proper computational and storage resources to run the model.
+### The EC2 instance must be configured with the proper computational and storage resources to run the model.
 
 Generative AI workloads typically require GPUs to run efficiently. The CloudFormation template will automatically create an EC2 instance with a GPU. This can be found in line 48 of the template.yaml file:
 ```
@@ -178,7 +178,7 @@ Additionally, LLMs often require many GBs of storage. For this lab, we have atta
             VolumeSize: 100
 ```
 
-##### The EC2 instance must be configured with sufficient and secure means of access such as a SSH key pair.
+### The EC2 instance must be configured with sufficient and secure means of access such as a SSH key pair.
 
 To enable SSH access, the template creates a key pair and attaches it to the EC2 instance. This can be found in lines 37-50 of the template.yaml file:
 ```
