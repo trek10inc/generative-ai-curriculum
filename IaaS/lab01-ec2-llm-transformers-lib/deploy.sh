@@ -1,4 +1,16 @@
-STACK_NAME=llm-workshop-lab01
+BASE_STACK_NAME=llm-workshop-lab01
+
+# get the first command line arg, error if not passed
+if [ -z "$1" ]
+  then
+    echo "Please provide a unique name for your environment"
+    echo "Usage: deploy.sh <unique-env-name>"
+    exit 1
+fi
+
+ENV_NAME=$1
+STACK_NAME=$BASE_STACK_NAME-$ENV_NAME
+
 aws cloudformation deploy --template-file template.yaml --stack-name $STACK_NAME --capabilities CAPABILITY_IAM
 KEYPAIRNAME=$(aws cloudformation describe-stacks --stack-name $STACK_NAME --query "Stacks[0].Outputs[?ExportName=='LLLMEC2KeyPairID'].OutputValue" --output text)
 echo "The key pair name is $KEYPAIRNAME"

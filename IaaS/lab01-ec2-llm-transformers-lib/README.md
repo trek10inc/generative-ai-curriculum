@@ -46,6 +46,7 @@ This lab provides an introduction to running large language models (LLMs) on AWS
 - The EC2 instance must be configured with proper permissions to access services such as the S3 bucket containing the Nvidia drivers.
 - The EC2 instance must be configured with the proper computational and storage resources to run the model.
 - The EC2 instance must be configured with sufficient and secure means of access, such as an SSH key pair.
+- The EC2 instance must be configured with a security group with the proper permissions to access the EC2 instance via SSH.
 
 For brevity's sake, this lab provides a CloudFormation template that will automatically configure an EC2 instance with all the above requirements. The template will leverage [User Data](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html) to address some of the required configurations, such as Nvidia drivers and a Python environment with the required libraries. The template will also create a Key Pair associated with the instance that can be used to SSH into the instance.
 
@@ -105,9 +106,9 @@ The Transformers Python library and a set of required associated libraries need 
           pip3 install -r /home/ec2-user/requirements.txt
 ```
 
-### The EC2 instance must be configured with proper permissions to access services such as the S3 bucket containing the Nvidia drivers.
+### The EC2 instance must be configured with proper permissions.
 
-The EC2 instance must be configured with an IAM role that has the proper permissions to access the S3 bucket containing the Nvidia Drivers. The CloudFormation template will automatically create this IAM role. This can be found in lines 1-58 of the template.yaml file:
+The EC2 instance must be configured with an IAM role that has the proper permissions to access the S3 bucket containing the Nvidia Drivers. The CloudFormation template will automatically create this IAM role. This can be found in lines 1-58 of the `template.yaml` file:
 ```
 Resources:
   # create IAM role for EC2 instance
@@ -160,7 +161,7 @@ Resources:
 
 ### The EC2 instance must be configured with the proper computational and storage resources to run the model.
 
-Generative AI workloads typically require GPUs to run efficiently. The CloudFormation template will automatically create an EC2 instance with a GPU. This can be found in line 48 of the template.yaml file:
+Generative AI workloads typically require GPUs to run efficiently. The CloudFormation template will automatically create an EC2 instance with a GPU. This can be found in line 48 of the `template.yaml` file where the `InstanceType` parameter is set to g5.2xlarge:
 ```
 # define ec2 instance in cloudformation
   Ec2Instance:
@@ -170,7 +171,7 @@ Generative AI workloads typically require GPUs to run efficiently. The CloudForm
       InstanceType: g5.2xlarge
 ```
 
-Additionally, LLMs often require many GBs of storage. For this lab, we have attached a 100 GB root volume to the EC2 instance. This can be found in lines 55-58 of the template.yaml file:
+Additionally, LLMs often require many GBs of storage. For this lab, we have attached a 100 GB root volume to the EC2 instance. This can be found in lines 55-58 of the `template.yaml` file:
 ```
       BlockDeviceMappings:
         - DeviceName: "/dev/xvda"
@@ -180,7 +181,7 @@ Additionally, LLMs often require many GBs of storage. For this lab, we have atta
 
 ### The EC2 instance must be configured with sufficient and secure means of access such as a SSH key pair.
 
-To enable SSH access, the template creates a key pair and attaches it to the EC2 instance. This can be found in lines 37-50 of the template.yaml file:
+To enable SSH access, the template creates a key pair and attaches it to the EC2 instance. This can be found in lines 37-50 of the `template.yaml` file:
 ```
   LLLMEC2KeyPair:
     Type: AWS::EC2::KeyPair
@@ -195,6 +196,30 @@ To enable SSH access, the template creates a key pair and attaches it to the EC2
       KeyName: !Ref LLLMEC2KeyPair
 ```
 
+The EC2 instance must be configured with a security group with the proper permissions to access the EC2 instance via SSH. This can be found in lines 45-65 of the `template.yaml` file:
+```
+  InstanceSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Enable SSH access via port 22
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+      Tags:
+        - Key: Name
+          Value: InstanceSecurityGroup
+
+# define ec2 instance in cloudformation
+  Ec2Instance:
+  ...
+      SecurityGroupIds:
+        - !GetAtt InstanceSecurityGroup.GroupId
+```
+
+
+
 When you create a new key pair using AWS CloudFormation, the private key is automatically saved to AWS Systems Manager Parameter Store. The parameter name has the following format:
 ```
 /ec2/keypair/key_pair_id
@@ -202,7 +227,7 @@ When you create a new key pair using AWS CloudFormation, the private key is auto
 
 Please see the following AWS documentation for more information: [Create AWS Key Pairs](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/create-key-pairs.html).
 
-This lab's CloudFormation template creates a CloudFormation Output containing the Key Pair Name to allow automatic retrieval of the private key from the SSM parameter store. This can be found in lines 96-101 of the template.yaml file:
+This lab's CloudFormation template creates a CloudFormation Output containing the Key Pair Name to allow automatic retrieval of the private key from the SSM parameter store. This can be found in lines 96-101 of the `template.yaml` file:
 ```
 Outputs:
   LLLMKeyPairId:
@@ -212,7 +237,7 @@ Outputs:
       Name: LLLMEC2KeyPairID
 ```
 
-Finally, the deployment script used this output to retrieve the private key from the SSM parameter store and save it to a local file that can then be used to connect to the instance via SSH. This can be found in lines 10-14 of the deploy.sh file:
+Finally, the deployment script used this output to retrieve the private key from the SSM parameter store and save it to a local file that can then be used to connect to the instance via SSH. This can be found in lines 10-14 of the `deploy.sh` file:
 ```
 KEYPAIRNAME=$(aws cloudformation describe-stacks --stack-name $STACK_NAME --query "Stacks[0].Outputs[?ExportName=='LLLMEC2KeyPairID'].OutputValue" --output text)
 echo "The key pair name is $KEYPAIRNAME"
@@ -228,17 +253,24 @@ echo "ssh -i $KEYPAIRNAME.pem ec2-user@$(aws cloudformation describe-stacks --st
 ### Step 1: Deploy the CloudFormation Template
 As mentioned in the prerequisites of this lab, it is assumed you have the AWS CLI installed and configured with access to your AWS account. If you do not, please refer to the [AWS CLI Documentation](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) and [Configuring the CLI Documentation](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html) for instructions on how to do so.
 
-To deploy the CloudFormation template, run the following command in your terminal:
+Clone this repository to your local machine if you have not already done so:
 ```
-./deploy.sh
-``` 
+git clone https://github.com/trek10inc/generative-ai-curriculum.git
+```
 
-This will deploy the CloudFormation template in the root directory of this repository. The template will create the following resources:
+To deploy the CloudFormation template, run the following command in your terminal:
+
+> N.B. you need to pass the deploy script a unique environment name. The following example uses an environment variable to do so
+```
+export ENVIRONMENT_NAME=your-unique-env-name
+./deploy.sh $ENVIRONMENT_NAME
+```
+
+This will deploy the `template.yaml` file in the root directory of this repository. The template will create the following resources:
 - An EC2 instance with the proper configuration to run the transformers library.
 - An IAM role attached to the instance with the least privileged access needed.
 - A Key Pair attached to the instance to allow SSH access.
-<!-- - An S3 bucket to store the model and any outputs generated by the model. -->
-<!-- - A security group with the proper permissions to access the EC2 instance via SSH. -->
+- A security group with the proper permissions to access the EC2 instance via SSH.
 
 The CloudFormation Stack's status should say CREATE_COMPLETE once the template has been successfully deployed. This can be found in the AWS Console under CloudFormation and should look something like this:
 
