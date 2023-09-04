@@ -9,7 +9,7 @@ Welcome to Trek10's Generative AI on AWS curriculum. This repository contains a 
 
 Currently the curriculum includes the following labs:
 ### IaaS
-- [Lab 01: LLMs on EC2 via the Transformers Library](IaaS/lab01-ec2-llm-transformers) (Approx. 30min)
+- [Lab 01: LLMs on EC2 via the Transformers Library](IaaS/lab01-ec2-llm-transformers-lib) (Approx. 30min)
 
 <!-- Planned Labs:
 - Lab 02: Quantized Models on EC2
