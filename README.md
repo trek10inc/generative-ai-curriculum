@@ -5,23 +5,23 @@
 
 # Trek10's Generative AI on AWS Curriculum
 
-Welcome to our internal Generative AI on AWS curriculum. This repository contains a series of labs focusing on the AWS Machine Learning stack, categorized into three primary sections: Infrastructure as a Service (IaaS), Platform as a Service (PaaS), and Software as a Service (SaaS).
+Welcome to Trek10's Generative AI on AWS curriculum. This repository contains a series of labs focusing on the AWS Machine Learning stack, categorized into three primary sections: Software as a Service (SaaS),  Platform as a Service (PaaS), and Infrastructure as a Service (IaaS). These three levels of abstraction align with the three levels of offerings on the AWS ML stack: ML Frameworks & Infrastructure, ML Services, and AI Services correspondingly. Refer to the [Background](#background) section for more information on the AWS ML stack.
 
 Currently the curriculum includes the following labs:
 ### IaaS
-- [Lab 01: LLMs on EC2 via the Transformers Library](IaaS/lab01-bedrock-introduction/README.md) (Approx. 30min)
+- [Lab 01: LLMs on EC2 via the Transformers Library](IaaS/lab01-ec2-llm-transformers) (Approx. 30min)
 
 <!-- Planned Labs:
 - Lab 02: Quantized Models on EC2
 - Lab 03: Pretraining LLMs on EC2 -->
 ### PaaS
-- [Lab 01: AWS SageMaker Finetuning](PaaS/lab01-sagemaker-finetuning-foundational-model)
+- [Lab 01: AWS SageMaker Finetuning](PaaS/lab01-sagemaker-finetuning-foundational-model) (Approx. 30min)
 
 <!-- Planned Labs:
 - Lab 02: AWS SageMaker Instruction Based Finetuning -->
 ### SaaS
-- [Lab 01: Bedrock Introduction](SaaS/lab01-bedrock-introduction)
-- [Lab 02: Bedrock Chatbots](SaaS/lab02-bedrock-chatbots)
+- [Lab 01: Bedrock Introduction](SaaS/lab01-bedrock-introduction) (Approx. 20min)
+- [Lab 02: Bedrock Chatbots](SaaS/lab02-bedrock-chatbots) (Approx. 30min)
 
 
 <!-- Planned Labs:
@@ -86,15 +86,22 @@ Each lab comes with its dedicated README containing the lab's instructions and o
 
 ## Getting Started
 
-[Provide a brief introduction or overview of how one should approach these labs or any initial steps to be followed.]
+Navigate to the lab you wish to complete and follow the instructions in the README.
 
 ## Prerequisites
 
-Details coming soon.
+This curriculum is designed to be self contained and attempts to provide all the necessary resources to complete the labs. However, there are a few prerequisites that may help you get the most out of the labs:
+
+- **AWS Account:** You will need an AWS account to complete the labs.
+- **AWS CLI:** For some labs, you will need the AWS CLI installed and configured on your local machine. For more information please refer to the [AWS CLI Documentation](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html).
+- **AWS Base Knowledge:** Some labs may require some basic knowledge of AWS services and tools. The labs will try to provide links to relevant documentation where possible. 
+- **Python:** Most labs require some basic knowledge of Python.
+
+It is recommended you watch [Andrej Karpathy's State of GPT Talk](https://www.youtube.com/watch?v=bZQun8Y4L2A) to get a better understanding of the current state of Generative AI, LLMs and their capabilities.
 
 ## Contributing
 
-[If you wish for others to contribute, provide guidelines here.]
+We welcome contributions to this curriculum. Please create issues and pull requests as you see fit. Additionally, if you have any questions or concerns please feel free to reach out to the Trek10 team via [email](mailto:bjudson@trek10.com) or [slack](https://trek10-community.slack.com/archives/C02BZ8ZJY5S).
 
 ## Additional Resources
 
