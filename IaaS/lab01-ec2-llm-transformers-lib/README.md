@@ -55,8 +55,8 @@ Once inside the instance, you will be able to run a Python script to download an
 
 ### The EC2 instance must be configured with the proper drivers to run AI workloads on the GPU.
 
-These GPU-compatible EC2 instances are created with a version of the Amazon Linux 2023 AMI. By default, these come installed with open-source Nouveau drivers. Instead, Large Language Models require the corresponding Nvidia drivers for your environment. The Nvidia drivers are not open-source and, therefore, cannot be installed by default. However, Nvidia has made the drivers available for download. Refer to the following [AWS documentation](
-https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/install-nvidia-driver.html) for more details on installing the drivers. The CloudFormation template will automatically download and install the Nvidia drivers on the EC2 instance via its User Data (which runs on boot). This can be found in lines 79-91 of the template.yaml file found in this repository:
+These GPU-compatible EC2 instances are created with a version of the Amazon Linux 2023 AMI. By default, these come installed with open-source Nouveau drivers. Instead, most generative AI workloads require the corresponding Nvidia drivers for your environment. Nvidia has made the drivers available for download. Refer to the following [AWS documentation](
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/install-nvidia-driver.html) for more details on installing the drivers. The CloudFormation template will automatically download and install the Nvidia drivers on the EC2 instance via its User Data (which runs on boot). This can be found in lines 79-91 of the `template.yaml` file found in this repository:
 ```
       UserData:
         Fn::Base64: !Sub |
@@ -79,11 +79,11 @@ https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/install-nvidia-driver.html) 
 
 ```
 
-N.B. you can use AWS's Deep Learning AMI instead of the Amazon Linux 2023 AMI. The Deep Learning AMI comes with the Nvidia drivers pre-installed. However, the Deep Learning AMI is not free and will incur additional costs. For more information on the Deep Learning AMI, please refer to the following [AWS documentation](https://docs.aws.amazon.com/dlami/latest/devguide/what-is-dlami.html).
+> N.B. you can use AWS's Deep Learning AMI instead of the Amazon Linux 2023 AMI. The Deep Learning AMI comes with the Nvidia drivers pre-installed. However, the Deep Learning AMI is not free and will incur additional costs. For more information on the Deep Learning AMI, please refer to the following [AWS documentation](https://docs.aws.amazon.com/dlami/latest/devguide/what-is-dlami.html).
 
 ### The EC2 instance must be configured with the proper Python packages to run the transformers library.
 
-The Transformers Python library and a set of required associated libraries need to be installed to run the Generative AI models on the instance. The set of required libraries can be found in the ec2-files/requirements.txt file. The CloudFormation template encodes that requirements.txt file, includes it in the user data, and then uses pip3 to install the libraries. This can be seen in lines 65-77 of the CloudFormation template:
+The Transformers Python library and a set of required associated libraries need to be installed to run the Generative AI models on the instance. The set of required libraries can be found in the `ec2-files/requirements.txt` file. The requirements.txt file was encoded and inlcuded in the instance's the user data, the user data then uses pip3 to install the libraries. This can be seen in lines 65-77 of the `template.yaml` file:
 ```
       UserData:
         Fn::Base64: !Sub |
