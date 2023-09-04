@@ -51,7 +51,7 @@ For brevity's sake, this lab provides a CloudFormation template that will automa
 
 Once inside the instance, you will be able to run a Python script to download and interact with a LLM.
 
-**Let's walk through how the configuration needs are addressed in more detail...**
+#### Let's walk through how the configuration needs are addressed in more detail...
 
 ##### The EC2 instance must be configured with the proper drivers to run AI workloads on the GPU.
 
