@@ -431,12 +431,12 @@ sudo nano main.py
 
 Once the file is open, simply change the following line:
 ```
-prompt = "Welcome to our workshop focusing on Generative AI on AWS. Generative AI is."
+prompt = "Welcome to our workshop focusing on Generative AI on AWS. Generative AI is"
 ```
 
 To whatever you would like to prompt the model with. For example:
 ```
-prompt = "I am a robot. I am here to help you."
+prompt = "I am a robot. I am here to help you"
 ```
 
 Challenge: Can you get the model to speak in a certain tone? In the voice of someone famous? (e.g. Yoda, Shakespeare, etc.)
@@ -444,7 +444,7 @@ Challenge: Can you get the model to speak in a certain tone? In the voice of som
 After completing this step, you should confidently be able to prompt the model as you see fit.
 
 ### Extra Credit: Change the Model
-The main.py script is set to download and run the falcon-7b model. You can change this model by editing the main.py script inside the instance. Simply change the following line:
+The `main.py` script is set to download and run the falcon-7b model. You can change this model by editing the main.py script inside the instance. Simply change the following line:
 ```
 model = "tiiuae/falcon-7b"
 ```
@@ -454,7 +454,12 @@ To whatever model you would like to run. For example:
 model_name = "tiiuae/falcon-7b-instruct"
 ```
 
-N.B. many models have an "instruct" version, which is well suited for instruction-based prompts.
+> N.B. many models have an "instruct" version, which is well suited for instruction-based prompts. Instead of simply generating text to complete or resolve the given prompt, instruct based models are trained through reward modeling and reinforcement learning to generate text that trys to be helpful and solve the instruction given in the prompt.
+> For example you may prompt this type of models like so:
+> ```
+> prompt = "Write a poem about genrative AI"
+> ```
+
 
 A list of all available models can be found [here](https://huggingface.co/transformers/pretrained_models.html). At the time of this writing, there are over 290,000 models available. Generative AI models are quickly becoming a major contributor to the open-source community.
 
@@ -462,7 +467,7 @@ After completing this step, you should confidently be able to run any model from
 
 ### Clean Up: Delete the CloudFormation Stack
 
-⚠️ N.B. Be sure to delete the CloudFormation stack once you are done with the lab as the EC2 instance will continue to incur costs until it is deleted.
+> ⚠️ Be sure to delete the CloudFormation stack once you are done with the lab as the EC2 instance will continue to incur costs until it is deleted.
 
 You can exit the EC2 instance by running the following command:
 ```
@@ -471,7 +476,7 @@ exit
 
 Once you are done with the lab, you can delete the CloudFormation stack by running the following command:
 ```
-./delete.sh
+./delete.sh $ENVIRONMENT_NAME
 ```
 
 This will delete the CloudFormation stack and all resources created by the stack. Additionally, this will delete the local private key file that was created to allow SSH access to the EC2 instance.
