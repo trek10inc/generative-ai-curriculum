@@ -297,13 +297,56 @@ You should now be SSH'd into the EC2 instance!
 >  If the user data was completed, the bottom of the output should look something like this:
 >  ```
 >  + sudo reboot
->  Cloud-init v. 22.2.2 running 'init' at Mon, 21 Aug 2023 14:59:32 +0000. Up 3.63 seconds.
+>  ++ nvidia-smi
+>  + TEST_DRIVER='Mon Sep  4 21:21:19 2023       
+>  +---------------------------------------------------------------------------------------+
+>  | NVIDIA-SMI 535.104.05             Driver Version: 535.104.05   CUDA Version: 12.2     |
+>  |-----------------------------------------+----------------------+----------------------+
+>  | GPU  Name                 Persistence-M | Bus-Id        Disp.A | Volatile Uncorr. ECC |
+>  | Fan  Temp   Perf          Pwr:Usage/Cap |         Memory-Usage | GPU-Util  Compute M. |
+>  |                                         |                      |               MIG M. |
+>  |=========================================+======================+======================|
+>  |   0  NVIDIA A10G                    Off | 00000000:00:1E.0 Off |                    0 |
+>  |  0%   33C    P0              56W / 300W |      4MiB / 23028MiB |     15%      Default |
+>  |                                         |                      |                  N/A |
+>  +-----------------------------------------+----------------------+----------------------+
+>                                                                                           
+>  +---------------------------------------------------------------------------------------+
+>  | Processes:                                                                            |
+>  |  GPU   GI   CI        PID   Type   Process name                            GPU Memory |
+>  |        ID   ID                                                             Usage      |
+>  |=======================================================================================|
+>  |  No running processes found                                                           |
+>  +---------------------------------------------------------------------------------------+'
+>  + [[ Mon Sep  4 21:21:19 2023       
+>  +---------------------------------------------------------------------------------------+
+>  | NVIDIA-SMI 535.104.05             Driver Version: 535.104.05   CUDA Version: 12.2     |
+>  |-----------------------------------------+----------------------+----------------------+
+>  | GPU  Name                 Persistence-M | Bus-Id        Disp.A | Volatile Uncorr. ECC |
+>  | Fan  Temp   Perf          Pwr:Usage/Cap |         Memory-Usage | GPU-Util  Compute M. |
+>  |                                         |                      |               MIG M. |
+>  |=========================================+======================+======================|
+>  |   0  NVIDIA A10G                    Off | 00000000:00:1E.0 Off |                    0 |
+>  |  0%   33C    P0              56W / 300W |      4MiB / 23028MiB |     15%      Default |
+>  |                                         |                      |                  N/A |
+>  +-----------------------------------------+----------------------+----------------------+
+>                                                                                           
+>  +---------------------------------------------------------------------------------------+
+>  | Processes:                                                                            |
+>  |  GPU   GI   CI        PID   Type   Process name                            GPU Memory |
+>  |        ID   ID                                                             Usage      |
+>  |=======================================================================================|
+>  |  No running processes found                                                           |
+>  +---------------------------------------------------------------------------------------+ == *\D\r\i\v\e\r\ \V\e\r\s\i\o\n* ]]
+>  + echo 'Driver installed successfully'
+>  Driver installed successfully
+>  Cloud-init v. 22.2.2 running 'init' at Mon, 04 Sep 2023 21:21:31 +0000. Up 3.77 seconds.
 >  ci-info: +++++++++++++++++++++++++++++++++++++++Net device info+++++++++++++++++++++++++++++++++++++++
 >  ci-info: +--------+------+------------------------------+---------------+--------+-------------------+
 >  ci-info: | Device |  Up  |           Address            |      Mask     | Scope  |     Hw-Address    |
 >  ci-info: +--------+------+------------------------------+---------------+--------+-------------------+
->  ci-info: |  ens5  | True |         172.31.68.76         | 255.255.240.0 | global | 16:d2:bf:c3:84:81 |
->  ci-info: |  ens5  | True | fe80::14d2:bfff:fec3:8481/64 |       .       |  link  | 16:d2:bf:c3:84:81 |
+>  ci-info: |  ens5  | True |        172.31.70.154         | 255.255.240.0 | global | 16:de:86:76:5d:13 |
+>  ci-info: |  ens5  | True | fe80::14de:86ff:fe76:5d13/64 |       .       |  link  | 16:de:86:76:5d:13 |
 >  ci-info: |   lo   | True |          127.0.0.1           |   255.0.0.0   |  host  |         .         |
 >  ci-info: |   lo   | True |           ::1/128            |       .       |  host  |         .         |
 >  ci-info: +--------+------+------------------------------+---------------+--------+-------------------+
@@ -324,9 +367,9 @@ You should now be SSH'd into the EC2 instance!
 >  ci-info: |   3   |    local    |    ::   |    ens5   |   U   |
 >  ci-info: |   4   |  multicast  |    ::   |    ens5   |   U   |
 >  ci-info: +-------+-------------+---------+-----------+-------+
->  Cloud-init v. 22.2.2 running 'modules:config' at Mon, 21 Aug 2023 14:59:33 +0000. Up 4.48 seconds.
->  Cloud-init v. 22.2.2 running 'modules:final' at Mon, 21 Aug 2023 14:59:33 +0000. Up 4.82 seconds.
->  Cloud-init v. 22.2.2 finished at Mon, 21 Aug 2023 14:59:34 +0000. Datasource DataSourceEc2.  Up 5.17 seconds
+>  Cloud-init v. 22.2.2 running 'modules:config' at Mon, 04 Sep 2023 21:21:32 +0000. Up 4.61 seconds.
+>  Cloud-init v. 22.2.2 running 'modules:final' at Mon, 04 Sep 2023 21:21:33 +0000. Up 4.96 seconds.
+>  Cloud-init v. 22.2.2 finished at Mon, 04 Sep 2023 21:21:33 +0000. Datasource DataSourceEc2.  Up 5.35 seconds
 >  ```
 
 You can verify the NVIDIA drivers are successfully installed by running the following command:
