@@ -2,9 +2,9 @@
 
 This lab provides a hands-on introduction for implementing chatbots on AWS Bedrock. It is the second lab in the SaaS portion of the curriculum. It is recommended that you complete [Lab 01 - Bedrock Introduction](../lab01-bedrock-introduction/README.md) before starting this lab.
 
-This lab was heavily inspired by [AWS's Bedrock Workshop](https://github.com/aws-samples/amazon-bedrock-workshop).
+This lab was inspired by [AWS's Bedrock Workshop](https://github.com/aws-samples/amazon-bedrock-workshop).
 
-This lab relies heavily on the use of a Jupyter notebook. If you are unfamiliar with Jupyter notebooks, please refer to the [Jupyter Documentation](https://jupyter-notebook.readthedocs.io/en/stable/notebook.html) for more information. The instructions found in this readme assist in setting up the environment for the lab, but the lab itself is contained in the [bedrock_introduction.ipynb](bedrock_introduction.ipynb) Jupyter notebook found in this repository.
+This lab relies on the use of a Jupyter notebook. If you are unfamiliar with Jupyter notebooks, please refer to the [Jupyter Documentation](https://jupyter-notebook.readthedocs.io/en/stable/notebook.html) for more information. The instructions found in this readme assist in setting up the environment for the lab, but the lab itself is contained in the [bedrock_introduction.ipynb](bedrock_introduction.ipynb) Jupyter notebook found in this repository.
 
 ## Table of Contents
 
@@ -14,24 +14,23 @@ This lab relies heavily on the use of a Jupyter notebook. If you are unfamiliar 
 4. [Lab Instructions](#lab-instructions)
 5. [Credits and Acknowledgments](#credits-and-acknowledgments)
 
-<!-- 5. [Troubleshooting](#troubleshooting)
-6. [Contact](#contact)) -->
-
 ## Lab Objectives
 
 In this lab, you will learn how to:
 
-- Implement chatbots using the Amazon Bedrock service.
-- Implement contextual chatbots using the Amazon Bedrock service.
+- Implement chatbots using the Amazon Bedrock service and get hands on with the following use cases:
+    - Chatbot (Basic) - Zero Shot chatbot with a FM model
+    - Chatbot using prompt - template(Langchain) - Chatbot with some context provided in the prompt template
+    - Chatbot with persona - Chatbot with defined roles. i.e. Career Coach and Human interactions
+    - Contextual-aware chatbot - Passing in context through an external file by generating embeddings.
+
 - Leverage Langchain to:
     - Implement conversational memory through Conversational Chains
 - Use PromptTemplate to:
     - Create standardized prompts for interacting with the FMs
     - Implement conversational memory through Conversational Chains
     - Implement persona-based chatbots
-- Cretea Chatbots with specific personas
-
-- Use RAG to create context aware chatbot
+- Use of embeddings and Retrival Augmented Generation (RAG) to create context aware chatbots
 
 - Hands on with tools such as
     - Langchain
@@ -40,31 +39,18 @@ In this lab, you will learn how to:
     - Chroma
     - Weaviate
 
-- Hands on with the following use cases:
-    - Chatbot (Basic) - Zero Shot chatbot with a FM model
-    - Chatbot using prompt - template(Langchain) - Chatbot with some context provided in the prompt template
-    - Chatbot with persona - Chatbot with defined roles. i.e. Career Coach and Human interactions
-    - Contextual-aware chatbot - Passing in context through an external file by generating embeddings.
-
 ## Prerequisites
 - An active AWS account. (With access to the AWS Bedrock service)
-<!-- - AWS CLI installed and given access to said account. -->
 - Basic knowledge of Python programming.
-<!-- - Familiarity with command line interface (CLI). -->
-<!-- - Basic understanding of AWS services (specifically [EC2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html) and [CloudFormation](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html)) and cloud computing basics. -->
-
-<!-- For more information on configuring your CLI please refer to the [AWS CLI Documentation](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) and [Configuring the CLI Documentation](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html) for instructions on how to do so. -->
-
 
 ## Setting Up Your Environment
 - You must have an active AWS account. (With access to the AWS Bedrock service)
-<!-- - You must have the AWS CLI installed and given access to said account. -->
 
 ### Choose a notebook environment
 This lab utalizes a Jupyter Notebook to run the code. There are multiple options for running a Jupyter Notebook:
 - For a fully-managed environment with rich AI/ML features, we'd recommend using [SageMaker Studio](https://docs.aws.amazon.com/sagemaker/latest/dg/studio.html). To get started quickly, you can refer to the instructions for domain quick setup.
 - For a fully-managed but more basic experience, you could instead create a [SageMaker Notebook Instances](https://docs.aws.amazon.com/sagemaker/latest/dg/nbi.html).
-    - we provide CF?
+    <!-- - we provide CF? -->
 - If you prefer to use your existing (local or other) notebook environment, make sure it has credentials for calling AWS.
 
 
@@ -111,7 +97,7 @@ If you completed [Lab 01 - Bedrock Introduction](../lab01-bedrock-introduction/R
 
 Clone this repository to your notebook instance. This can be done by running the following command in a terminal:
 ```bash
-git clone git@gitlab.com:trek10inc/internal/machine-learning/generative-ai-curriculum.git
+git clone https://github.com/trek10inc/generative-ai-curriculum.git
 cd generative-ai-curriculum
 ```
 

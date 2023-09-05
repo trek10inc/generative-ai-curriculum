@@ -46,7 +46,7 @@ In this lab, you will learn:
 This lab utalizes a Jupyter Notebook to run the code. There are multiple options for running a Jupyter Notebook:
 - For a fully-managed environment with rich AI/ML features, we'd recommend using [SageMaker Studio](https://docs.aws.amazon.com/sagemaker/latest/dg/studio.html). To get started quickly, you can refer to the instructions for domain quick setup.
 - For a fully-managed but more basic experience, you could instead create a [SageMaker Notebook Instances](https://docs.aws.amazon.com/sagemaker/latest/dg/nbi.html).
-    - we provide CF?
+    <!-- - we provide CF? -->
 - If you prefer to use your existing (local or other) notebook environment, make sure it has credentials for calling AWS.
 
 
