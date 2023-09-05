@@ -16,6 +16,7 @@ This lab relies heavily on the use of a Jupyter notebook. If you are unfamiliar 
 ## Lab Objectives
 
 In this lab, you will learn how to:
+- Deploy and interact with a SageMaker Jumpstart foundational model.
 - Finetune a foundational model using AWS SageMaker.
 - Deploy a finetuned model to an endpoint.
 - Make inferences using the deployed model.
