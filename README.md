@@ -15,7 +15,7 @@ Currently the curriculum includes the following labs:
 - Lab 02: Quantized Models on EC2
 - Lab 03: Pretraining LLMs on EC2 -->
 ### PaaS
-- [Lab 01: AWS SageMaker Finetuning](PaaS/lab01-sagemaker-finetuning-foundational-model) (Approx. 30min)
+- [Lab 01: AWS SageMaker Finetuning](PaaS/lab01-sagemaker-finetuning-foundational-model) (Approx. 1.5hr)
 
 <!-- Planned Labs:
 - Lab 02: AWS SageMaker Instruction Based Finetuning -->
