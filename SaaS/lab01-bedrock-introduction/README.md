@@ -2,9 +2,9 @@
 
 This lab provides a hands-on introduction for running foundational models on AWS Bedrock. This lab will walk you through the basics of connecting to the Amazon Bedrock service from Python. You will get hands on experience with the set of foundational models currently made available via AWS Bedrock.
 
-This lab was heavily inspired by [AWS's Bedrock Workshop](https://github.com/aws-samples/amazon-bedrock-workshop).
+This lab was inspired by [AWS's Bedrock Workshop](https://github.com/aws-samples/amazon-bedrock-workshop).
 
-This lab relies heavily on the use of a Jupyter notebook. If you are unfamiliar with Jupyter notebooks, please refer to the [Jupyter Documentation](https://jupyter-notebook.readthedocs.io/en/stable/notebook.html) for more information. The instructions found in this readme assist in setting up the environment for the lab, but the lab itself is contained in the [bedrock_introduction.ipynb](bedrock_introduction.ipynb) Jupyter notebook found in this repository.
+This lab relies on the use of a Jupyter notebook. If you are unfamiliar with Jupyter notebooks, please refer to the [Jupyter Documentation](https://jupyter-notebook.readthedocs.io/en/stable/notebook.html) for more information. The instructions found in this readme assist in setting up the environment for the lab, but the lab itself is contained in the [bedrock_introduction.ipynb](bedrock_introduction.ipynb) Jupyter notebook found in this repository.
 ## Table of Contents
 
 1. [Lab Objectives](#lab-objectives)
@@ -18,7 +18,7 @@ This lab relies heavily on the use of a Jupyter notebook. If you are unfamiliar 
 
 ## Lab Objectives
 
-In this lab, you will learn how to:
+In this lab, you will learn:
 
 - The basics of connecting to the Amazon Bedrock service from the Python SDK.
 - Basic understanding of the Bedrock API.
@@ -90,7 +90,7 @@ Using one of the notebook environments listed in the [Choose a notebook environm
 
 Clone this repository to your notebook instance. This can be done by running the following command in a terminal:
 ```bash
-git clone git@gitlab.com:trek10inc/internal/machine-learning/generative-ai-curriculum.git
+git clone https://github.com/trek10inc/generative-ai-curriculum.git
 cd generative-ai-curriculum
 ```
 
@@ -114,4 +114,4 @@ This notebook will walk you through the basics of connecting to the Amazon Bedro
 
 ## Credits and Acknowledgments
 
-This lab was heavily inspired by [AWS's Bedrock Workshop](https://github.com/aws-samples/amazon-bedrock-workshop).
+This lab was inspired by [AWS's Bedrock Workshop](https://github.com/aws-samples/amazon-bedrock-workshop).
