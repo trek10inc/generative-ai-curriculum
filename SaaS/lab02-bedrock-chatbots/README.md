@@ -23,15 +23,13 @@ In this lab, you will learn how to:
     - Chatbot using prompt - template(Langchain) - Chatbot with some context provided in the prompt template
     - Chatbot with persona - Chatbot with defined roles. i.e. Career Coach and Human interactions
     - Contextual-aware chatbot - Passing in context through an external file by generating embeddings.
-
 - Leverage Langchain to:
     - Implement conversational memory through Conversational Chains
 - Use PromptTemplate to:
     - Create standardized prompts for interacting with the FMs
     - Implement conversational memory through Conversational Chains
     - Implement persona-based chatbots
-- Use of embeddings and Retrival Augmented Generation (RAG) to create context aware chatbots
-
+- Use of embeddings and Retrieval Augmented Generation (RAG) to create context aware chatbots
 - Hands on with tools such as
     - Langchain
     - PromptTemplate
