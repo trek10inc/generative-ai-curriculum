@@ -27,6 +27,7 @@ In this lab, you will learn:
     - Anthropic Claude
     - AI21 Jurassic Grande
     - Stability Stable Diffusion XL
+- Understand how to interact with the models via the streaming text API.
 
 ## Prerequisites
 - An active AWS account. (With access to the AWS Bedrock service)
@@ -97,6 +98,7 @@ cd generative-ai-curriculum
 Because the service is in preview, the Amazon Bedrock SDK is not yet included in standard releases of the AWS SDK for Python - boto3. Run the following script to download and extract custom SDK wheels for testing Bedrock:
 
 ```
+cd SaaS
 ./download-dependencies.sh
 ```
 
