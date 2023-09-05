@@ -116,9 +116,9 @@ Outputs:
     Description: ID of the newly created EC2 Key Pair
     Value: !Ref LLLMEC2KeyPair
     Export:
-      Name: LLLMEC2KeyPairID
+      Name: !Sub LLLMEC2KeyPairID-${AWS::StackName}
   EC2PublicDnsName:
     Description: ID of the newly created EC2 Key Pair
     Value: !GetAtt Ec2Instance.PublicDnsName
     Export:
-      Name: EC2PublicDnsName
+      Name: !Sub LLLMEC2KeyPairID-${AWS::StackName}
