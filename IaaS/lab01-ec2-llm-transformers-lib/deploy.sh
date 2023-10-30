@@ -20,4 +20,4 @@ aws ssm get-parameter --name /ec2/keypair/$KEYPAIRID --with-decryption --query P
 chmod 400 ./$KEYPAIRNAME.pem
 
 echo "You can now connect to the EC2 instance using the following command:"
-echo "ssh -i $KEYPAIRNAME.pem ec2-user@$(aws cloudformation describe-stacks --stack-name $STACK_NAME --query "Stacks[0].Outputs[?ExportName=='EC2PublicDnsName-${STACK_NAME}'].OutputValue" --output text)"
+echo "ssh -i $KEYPAIRNAME.pem ec2-user@$(aws cloudformation describe-stacks --stack-name $STACK_NAME --query "Stacks[0].Outputs[?ExportName=='PublicDnsName-${STACK_NAME}'].OutputValue" --output text)"
